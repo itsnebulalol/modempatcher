@@ -26,12 +26,27 @@ def replace_occurrences(f: Path | str, search: bytes, replacement: bytes) -> Tup
 def main(args: Namespace) -> None:
     p = Path(args.path)
     
-    if args.unpatch:
-        search = b"<exclude> 39 76    </exclude>"
-        replace = b"<exclude> 39 76 77 </exclude>"
+    if args.legacy:
+        if args.unpatch:
+            search = b"<exclude> 39 47       </exclude>"
+            replace = b"<exclude> 39 47 76 77 </exclude>"
+        else:
+            search = b"<exclude> 39 47 76 77 </exclude>"
+            replace = b"<exclude> 39 47       </exclude>"
+    elif args.legacy_alt:
+        if args.unpatch:
+            search = b"<exclude> 39 47       </exclude>"
+            replace = b"<exclude> 39 47 77 78 </exclude>"
+        else:
+            search = b"<exclude> 39 47 77 78 </exclude>"
+            replace = b"<exclude> 39 47       </exclude>"
     else:
-        search = b"<exclude> 39 76 77 </exclude>"
-        replace = b"<exclude> 39 76    </exclude>"
+        if args.unpatch:
+            search = b"<exclude> 39 76    </exclude>"
+            replace = b"<exclude> 39 76 77 </exclude>"
+        else:
+            search = b"<exclude> 39 76 77 </exclude>"
+            replace = b"<exclude> 39 76    </exclude>"
     
     try:
         found, times, positions = replace_occurrences(p, search, replace)
@@ -48,6 +63,10 @@ if __name__ == '__main__':
                         help="path to modem.img")
     parser.add_argument('-u', '--unpatch', action="store_true",
                         help="unpatch modem")
+    parser.add_argument('-l', '--legacy', action="store_true",
+                        help="attempt to patch for Android 11")
+    parser.add_argument('-L', '--legacy-alt', action="store_true",
+                        help="attempt to patch for Android 11 (alternative)")
     args = parser.parse_args()
 
     main(args)    
