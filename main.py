@@ -1,3 +1,4 @@
+from sys import exit
 from mmap import mmap
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
@@ -52,11 +53,14 @@ def main(args: Namespace) -> None:
         found, times, positions = replace_occurrences(p, search, replace)
         if found:
             print(f"Found {times} occurrences at {positions}")
+            exit(0)
         else:
             print("Did not find any occurrences. Is this patched already?")
+            exit(1)
     except:
         print("Failed to patch file. Was it dumped correctly?")
-    
+        exit(1)
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-p', '--path', type=str, required=True,
@@ -69,4 +73,4 @@ if __name__ == '__main__':
                         help="attempt to patch for Android 11 (alternative)")
     args = parser.parse_args()
 
-    main(args)    
+    main(args)
