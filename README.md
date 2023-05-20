@@ -17,7 +17,7 @@ OnePlus has band 77 disabled on the OnePlus 9 and 9 Pro. The original way to ena
 
 - First, we need to dump our modem file. Boot into bootloader (`adb reboot bootloader`), and run `fastboot getvar current-slot`. Take note of this.
 - If not rooted, temporarily boot TWRP (`fastboot boot TWRP.img` in bootloader). Commands are the same in TWRP, or not. We need to find what partition the modem is on.
-- Run `adb shell` (`su` after if not using TWRP), then run `ls -lath /dev/block`. Find the modem for your current slot, and take note of it.
+- Run `adb shell` (`su` after if not using TWRP), then run `ls -lath /dev/block/by-name`. Find the modem for your current slot, and take note of it.
 - Run these commands in order (replace sde9 with the partition if it's different): 
   - [TIP] You may need to change `/tmp` to `/storage/emulated/0` if you're having issues.
 ```
