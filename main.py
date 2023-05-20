@@ -49,17 +49,18 @@ def main(args: Namespace) -> None:
             search = b"<exclude> 39 76 77 </exclude>"
             replace = b"<exclude> 39 76    </exclude>"
     
+    result = 0
     try:
         found, times, positions = replace_occurrences(p, search, replace)
         if found:
             print(f"Found {times} occurrences at {positions}")
-            exit(0)
         else:
             print("Did not find any occurrences. Is this patched already?")
-            exit(1)
+            result = 1
     except:
         print("Failed to patch file. Was it dumped correctly?")
-        exit(1)
+        result = 1
+    exit(result)
 
 if __name__ == '__main__':
     parser = ArgumentParser()
