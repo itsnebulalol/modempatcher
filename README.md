@@ -15,6 +15,9 @@ OnePlus has band 77 disabled on the OnePlus 9 and 9 Pro. The original way to ena
 
 # How to use
 
+> **Warning**
+> Bootloop risk!! On the latest version of LineageOS, my device bootloops after flashing the custom modem. It will only be fixed after erasing the device (flashing stock modem will not fix)! Please be careful, and always have a backup on hand.
+
 - First, we need to dump our modem file. Boot into bootloader (`adb reboot bootloader`), and run `fastboot getvar current-slot`. Take note of this.
 - If not rooted, temporarily boot TWRP (`fastboot boot TWRP.img` in bootloader). Commands are the same in TWRP, or not. We need to find what partition the modem is on.
 - Run `adb shell` (`su` after if not using TWRP), then run `ls -lath /dev/block/by-name`. Find the modem for your current slot, and take note of it.
